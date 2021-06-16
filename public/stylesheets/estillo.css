@@ -37,4 +37,11 @@ div.formulario{
     margin-left: 5px;
 }
 
+.input-altera{
+    border:none;
+    background-color: transparent;
+    outline: none;
+    width:70px;
+}
+
 

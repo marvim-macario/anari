@@ -11,7 +11,8 @@
 </head>
 
 <body>
-  <h5>Bem vindo, {{nome}}.</h5>  
+  <h5>Bem vindo <div id='name'></div> </h5> 
+  
     <div class="form">
         <div class="card">
             <div class="card-top">
@@ -24,12 +25,12 @@
                 
                 
                 
-                <button type="button"><a href="cadastro/produto"> PRODUTO</a></button>
-                <button type="button"><a href="cadastrar/fornecedor">FORNECEDOR</a></button>
+                <button id="cadastro" type="button"> PRODUTO</button>
+                <button id="fornecedor" type="button"><a href="cadastrar/fornecedor">FORNECEDOR</a></button>
                 <button type="button"><a href= "saida/produt">SAIDA PRODUTO </a></button>
-                {{#if admin}}
+                {{!-- {{#if admin}} --}}
                 <button type="button" id = 'bt_cad_usuario'><a href="cadastrar/usuario"> CADASTRAR USUARIO</a></button>
-                {{/if}}
+                {{!-- {{/if}} --}}
                 <form method= "POST" action = "/logout">
                 <button id ='sair' type="submit">SAIR</button>
                 </form>
@@ -38,9 +39,18 @@
         <div>
         </div>
         <script>
+            const nivel =sessionStorage.getItem("nivel_usuario");
+            document.getElementById('name').innerText = sessionStorage.getItem("nome_usuario");
+            if(nivel != 1){
+                document.getElementById('fornecedor').style = "display:none"
+                document.getElementById('cadastro').style = "display:none"
+            }
+
+            
         const buttonSair = document.getElementById('sair').addEventListener('click',()=>{
-      window.location.href ="http://localhost:3000"
-    }) </script>
+        window.location.href ="http://localhost:3000"
+        })
+     </script>
 </body>
 
 </html>
