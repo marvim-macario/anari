@@ -18,7 +18,6 @@ const {
 
 const cadastroController = {
     create: async (req, res) => {
-        console.log(req.body)
         const {
             CATEGORIA_PRODUTO,
             TIPO_PRODUTO,
@@ -32,11 +31,12 @@ const cadastroController = {
         const db = new Sequelize(config)
 
         const [prod] = await produto.findAll({
+            
             where: {
                 CATEGORIA_PRODUTO: CATEGORIA_PRODUTO,
                 TIPO_PRODUTO: TIPO_PRODUTO,
                 TAMANHO_PRODUTO: TAMANHO_PRODUTO,
-                // GENERO_PRODUTO:GENERO,
+                GENERO_PRODUTO: "M",
                 COD_FORNECEDOR: COD_FORNECEDOR,
                 DEPARTAMENTO_PRODUTO: DEPARTAMENTO_PRODUTO
             }

@@ -15,7 +15,9 @@
 
 <body>
 
-
+    <div class="menu-button">
+        <button type="button"><a href="http://localhost:3000/home">Home</a></button>
+    </div>
 
 
 
@@ -62,7 +64,8 @@
                 </div>
                 <div class="modal-footer">
                     {{!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
-                    <button id="pesquisar" type="button" class="btn btn-success">Pesquisar</button>
+                    <button id="pesquisar" type="button" class="btn btn-success" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Pesquisar</button>
                     </form>
                 </div>
             </div>
@@ -127,31 +130,39 @@
                     <div class="col">
 
                         <label>TIPO VESTUÁRIO</label>
-                        <input id="tipo-vestiario-cadastro" type="text" class="form-control" name="VESTUARIO">
+                        <input id="tipo-vestiario-cadastro" type="text" class="form-control" name="VESTUARIO" required>
                     </div>
                     <div class="col">
                         <label>TECIDO</label>
-                        <input id="tecido-cadastro" type="text" class="form-control" name="TECIDO">
+                        <input id="tecido-cadastro" type="text" class="form-control" name="TECIDO" required>
                     </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label>TAMANHO</label>
-                    <input id="tamanho-cadastro" type="text" class="form-control" name="TAMANHO">
+                    <input id="tamanho-cadastro" type="text" class="form-control" name="TAMANHO" required>
                 </div>
                 <div class="col">
                     <label>GENERO</label>
-                    <input id="genero-cadastro" type="text" class="form-control" name="GENERO">
+                      <select class="form-select" id="genero-cadastro" name="GENERO" required>
+                        <option></option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label>CATEGORIA</label>
-                    <input id="categoria-cadastro" type="text" class="form-control" name="CATEGORIA">
+                    <select class="form-select" id="categoria-cadastro" name="GENERO" required>
+                        <option></option>
+                        <option value="ADULTO">ADULTO</option>
+                        <option value="INFANTIL">INFANTIL</option>
+                    </select>
                 </div>
                 <div class="col">
                     <label>COD_FORNECEDOR</label>
-                    <input id="cod-fornecedor-cadastro" type="text" class="form-control" name="COD_FORNECEDOR">
+                    <input id="cod-fornecedor-cadastro" type="text" class="form-control" name="COD_FORNECEDOR" required>
                 </div>
             </div>
             <div class="row">
@@ -160,13 +171,13 @@
                     <input id="quantidade-cadastro" type="text" class="form-control" name="QUANTIDADE">
                 </div>
                 <div class="col-6">
-                    <button id="pesquisar" type="submit" class="btn btn-success">
+                    <button id="cadastrar" type="submit" class="btn btn-success">
                         Cadastrar
                     </button>
                 </div>
                 </form>
                 <div class="col-6">
-                    <button id="pesquisar" type="button" class="btn btn-success" data-bs-toggle="modal"
+                    <button id="pesquisa" type="button" class="btn btn-success" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                         Pesquisa
                     </button>
@@ -176,20 +187,24 @@
         </div>
         <div class="pesquisa">
             <table id="table" style="width:100%">
-                <tr>
+                <thead>
                     <th>TIPO DE PRODUTO</th>
                     <th>TIPO</th>
                     <th>TAMANHO</th>
                     <th>GENERO</th>
                     <th>FORNECEDOR</th>
                     <th>QUANTIDADE</th>
-                </tr>
+                </thead>
 
 
             </table>
         </div>
     </div>
     <script>
+        document.getElementById('pesquisa').addEventListener('click',()=>{
+            var tab = document.querySelector('table')
+            tab.removeChild(tab.childNodes[2])
+        })
         document.getElementById('formulario-cadastro').addEventListener("submit", (evt) => {
             evt.preventDefault();
 
@@ -232,6 +247,7 @@
 
 
         document.getElementById('pesquisar').addEventListener('click', (evt) => {
+          
             const categoria = document.getElementById('CATEGORIA').value;
             const tipo_produto = document.getElementById('TIPO').value;
             const tamanho = document.getElementById('TAMANHO').value;
@@ -239,6 +255,7 @@
             const cod_produto = document.getElementById('COD_PRODUTO').value;
             const cod_fornecedor = document.getElementById('COD_FORNECEDOR').value;
             const tabela = document.getElementById('table')
+           
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
@@ -261,9 +278,10 @@
             fetch("http://localhost:3000/cadastro/produto/pesquisa", requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    
                     result.forEach((data) => {
-                        console.log(data);
-                        table.innerHTML += `<tr>
+                        
+                    tabela.innerHTML += `<tr id= "dadost">
                     <td>${data.CATEGORIA_PRODUTO}</td>
                     <td>${data.TIPO_PRODUTO}</td>
                     <td>${data.TAMANHO_PRODUTO}</td>
