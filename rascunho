@@ -1,0 +1,150 @@
+Victor Williams Stafusa da Silva, [17.05.21 23:50]
+1. Proteger o login em todas as rotas de cadastro.
+2. Fazer telas de alteração de verdade.
+3. Terminar telas de usuário, fornecedor e produto.
+
+Victor Williams Stafusa da Silva, [17.05.21 23:51]
+4. Listagem de produtos.
+5. Listagem de fornecedores.
+6. Tela de erro.
+
+
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    {{mensagem}}
+    <div class="form">
+        <div class="card">
+            <div class="card-top">
+                <h1 class="title">CADASTRO PRODUTO</h1>
+            </div>
+            <form action="/cadastro/produto" method="POST">
+                <div class="card-group">
+                    <div class="input">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">TIPO VESTUÁRIO</span>
+                            <input type="text" class="form-control" name="VESTUARIO">
+                        </div>
+                    </div>
+                    <div class="input">
+                      <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">TECIDO</span>
+                            <input type="text" class="form-control" name="TECIDO">
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">TAMANHO</span>
+                            <input type="text" class="form-control" name="TAMANHO">
+                        </div>
+                    </div>
+                    <div class="input">
+                         <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">GENERO</span>
+                            <input type="text" class="form-control" name="GENERO">
+                        </div>
+                    </div>
+                    <div class="input">
+                          <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">CATEGORIA</span>
+                            <input type="text" class="form-control" name="CATEGORIA">
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">COD_FORNECEDOR</span>
+                            <input type="text" class="form-control" name="COD_FORNECEDOR">
+                        </div>
+                    </div>
+                    <div class="input">
+                          <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">QUANTIDADE</span>
+                            <input type="text" class="form-control" name="QUANTIDADE">
+                        </div>
+                    </div>
+
+                    <div class="card-group">
+                        <button class= "btn btn-primary" type="submit">ENVIAR</button>
+                        <button  class="btn btn-primary" id="sair" type="button">SAIR</button>
+                    </div>
+                </div>
+            </form>
+            <div class="card">
+            </div>
+            <script>
+                const buttonSair = document.getElementById('sair').addEventListener('click', () => {
+                    window.location.href = "http://localhost:3000/home"
+                })
+            </script>
+</body>
+
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>SALA DE CONTROLE</title>
+   <link rel="stylesheet" href='/stylesheets/estillo.css'>
+
+</head>
+<body>
+
+        <div class="form">
+        <div class="card">
+            <div class="card-top">
+            <h1 class="title">CADASTRO PRODUTO</h1>
+            </div>
+
+            <form action="/cadastro/produto" method="POST"> 
+            <div class= "card-group">
+
+
+                <label>TIPO VESTUÁRIO</label>
+                <input type="text" name="VESTUARIO">
+                <label>TECIDO</label>
+                <input type="text" name="TECIDO">
+                <label>TAMANHO</label>
+                <input type="text" name="TAMANHO">
+                <label>GENERO</label>
+                <input type="text" name="GENERO">
+                <label>CATEGORIA</label>
+                <input type="text" name="CATEGORIA">
+                <label>COD_FORNECEDOR</label>
+                <input type="text" name="COD_FORNECEDOR">
+                <label>QUANTIDADE</label>
+                <input type="text" name="QUANTIDADE">
+            </div>
+
+            <div  class= "card-group">
+                <button type="submit">ENVIAR</button>
+                <button id= "sair" type="button">SAIR</button>
+        </div> 
+        </div>       
+        </form>
+         <script>
+        const buttonSair = document.getElementById('sair').addEventListener('click',()=>{
+      window.location.href ="http://localhost:3000/home"
+    }) </script>
+    </body>
+    </html>
+
+

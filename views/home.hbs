@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>SALA DE CONTROLE</title>
+    <link rel='stylesheet' href='/stylesheets/estilo.css' />
+
+</head>
+
+<body>
+  <h5>Bem vindo, {{nome}}.</h5>  
+    <div class="form">
+        <div class="card">
+            <div class="card-top">
+                <h1 class="title">SALA DE CONTROLE </h1>
+
+            </div>
+
+            <div class="card-group">
+
+                
+                
+                
+                <button type="button"><a href="cadastro/produto"> PRODUTO</a></button>
+                <button type="button"><a href="cadastrar/fornecedor">FORNECEDOR</a></button>
+                <button type="button"><a href= "saida/produt">SAIDA PRODUTO </a></button>
+                {{#if admin}}
+                <button type="button" id = 'bt_cad_usuario'><a href="cadastrar/usuario"> CADASTRAR USUARIO</a></button>
+                {{/if}}
+                <form method= "POST" action = "/logout">
+                <button id ='sair' type="submit">SAIR</button>
+                </form>
+            </div>
+        </div>
+        <div>
+        </div>
+        <script>
+        const buttonSair = document.getElementById('sair').addEventListener('click',()=>{
+      window.location.href ="http://localhost:3000"
+    }) </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>ANARI</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+</head>
+<body>
+    <form class= "form" method= "POST" action= "/home">
+        <div class="card">
+            <div class="card-top">
+                <h1 class="title">ALMOXARIFADO</h1>
+                <p class="log">ENTRE ALMOXARIFADO</p>
+            </div>
+
+            <div class= "card-group">
+                <label>usuário</label>
+                <input type="text" name="usuario" placeholder="digite num cartão"> 
+            </div>
+
+            <div class= "card-group">
+                <label>senha</label>
+                <input type="password" name="senha"  placeholder="digite sua senha"> 
+            </div>
+            {{#if mensagem}}
+            <div  class= "card-group">
+                {{mensagem}}
+            </div>
+            {{/if}}
+            <div  class= "card-group">
+                <button  type="submit">ENTRE</button>
+            </div>
+
+        
+        <div>
+    </form>
+</body>
+</html>

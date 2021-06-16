@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href='/stylesheets/estillo.css'>
+    <title>Hello, world!</title>
+</head>
+
+<body>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pesquisa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="card-group">
+                        <form id='modal-formulario' action="#" method="POST">
+                            <div class="modal-label">
+                                <label>NOME</label>
+                                <input id="NOME<" type="text" name="NOME<">
+                            </div>
+
+                            <div class="modal-label">
+                                <label>CARTAO USUARIO</label>
+                                <input id="CARTAO USUARIO" type="text" name="CARTAO USUARIO">
+                            </div>
+                            <div class="modal-label">
+                                <label>CARGO</label>
+                                <input id="CARGO" type="text" name="CARGO">
+                            </div>
+                            <div class="modal-label">
+                                <label>SENHA</label>
+                                <input id="SENHA" type="text" name="SENHA">
+                            </div>
+                            <div class="modal-label">
+                                <label>ATRIBUICAO</label>
+                                <input id="ATRIBUICAO" type="text" name="ATRIBUICAO">
+                            </div>
+                            
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {{!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
+                    <button id="pesquisar" type="button" class="btn btn-success">Pesquisar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="formulario">
+            <h1 class="title">CADASTRAR USUARIO</h1>
+            <div class="row">
+                <form action="/cadastro/produto" method="POST">
+                <div class="col">
+
+                    <label>NOME</label>
+                    <input id="" type="text" class="form-control" name="NOME">
+                </div>
+                <div class="col">
+                    <label>NUMERO CARTAO</label>
+                    <input id="" type="text" class="form-control" name="NUMERO CARTAO">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>CARGO</label>
+                    <input id="" type="text" class="form-control" name="CARGO">
+                </div>
+                <div class="col">
+                    <label>SENHA</label>
+                    <input id="" type="text" class="form-control" name="SENHA">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>ATRIBUICAO</label>
+                    <input id="" type="text" class="form-control" name="ATRIBUICAO">
+                </div>
+                
+            </div>
+            
+                <div class="col-6">
+                    <button id="pesquisar" type="submit" class="btn btn-success">
+                        Cadastrar
+                    </button>
+                </div>
+                </form>
+                <div class="col-6">
+                    <button id="pesquisar" type="button" class="btn btn-success" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Pesquisa
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <div class="pesquisa">
+            <table id="table" style="width:100%">
+                <tr>
+                    <th>NOME</th>
+                    <th>NUMERO CARTAO</th>
+                    <th>CARGO</th>
+                    <th>SENHA</th>
+                    <th>ATRIBUICAO</th>
+                </tr>
+               
+               
+            </table>
+        </div>
+    </div>
+    <script>
+        document.getElementById('pesquisar').addEventListener('click', (evt) => {
+            const categoria = document.getElementById('NOME').value;
+            const tipo_produto = document.getElementById('NUMERO DO CARTÃO').value;
+            const tamanho = document.getElementById('CARGO').value;
+            const genero = document.getElementById('SENHA').value;
+            const cod_produto = document.getElementById('ATRIBUIÇÃO').value;
+            const tabela = document.getElementById('table')
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            NOME:NOME,
+            NUMERO CARTÃO:NUMERO CARTÃO,
+            CARGO :CARGO,
+            SENHA:SENHA,
+            ATRIBUIÇÃO:ATRIBUIÇÃO,
+        });
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://localhost:3000/cadastro/produto/pesquisa", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            result.forEach((data) => {
+                console.log(data);
+                table.innerHTML+= `<tr>
+                    <td>${data.NOME}</td>
+                    <td>${data.NUMERO_CARTÃO}</td>
+                    <td>${data.CARGO}</td>
+                    <td>${data.SENHA}</td>
+                    <td>${data.ATRIBUIÇÃO}</td>
+
+                </tr>`
+            })
+        })
+        .catch(error => console.log('error', error));
+})
+
+document.getElementById()
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

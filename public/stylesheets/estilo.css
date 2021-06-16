@@ -1,0 +1,45 @@
+body{
+    background-color: aquamarine;
+    font-family: sans-serif;
+
+}
+.form{
+    width: 500px;
+    margin: auto;
+    padding-top:30px;
+
+}
+.title{
+    color: rgb(160, 200, 113);
+}
+
+
+.card{
+    
+    box-shadow: rgb(196, 240, 232);
+    background-color: azure;
+    padding: 5px;
+    border-radius: 8p;
+
+}
+
+.card-group > button {
+
+    background-color: rgb(196, 240, 232);
+    font-size: 12px;color: rgb(97, 97, 96);
+    border-radius: 5px;
+    border-color:rgb(196, 240, 232);
+    margin: 5px;
+    margin-left: 25%;
+    padding: 15px;
+    height:40px;  
+    display: block;
+    width: 45%;
+}
+
+.card-top{
+    text-align: center;
+}
+
+
+

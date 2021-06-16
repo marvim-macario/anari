@@ -1,0 +1,40 @@
+body{
+    background-color: aquamarine;
+    font-family: sans-serif;
+
+}
+
+.container{
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    padding-top:100px
+    
+}
+
+div.formulario{
+    /* border: 1px solid black; */
+    background-color: rgb(196, 240, 232);
+    padding:50px
+}
+
+.pesquisa{
+    border: 1px solid black;
+    background-color: rgb(196, 240, 232);
+}
+
+#pesquisar{
+   margin-top: 20px;
+}
+
+.modal-label{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:5px
+}
+
+.modal-label input{
+    margin-left: 5px;
+}
+
+
