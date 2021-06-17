@@ -31,7 +31,7 @@ const cadastroController = {
         const db = new Sequelize(config)
 
         const [prod] = await produto.findAll({
-            
+
             where: {
                 CATEGORIA_PRODUTO: CATEGORIA_PRODUTO,
                 TIPO_PRODUTO: TIPO_PRODUTO,
@@ -41,7 +41,7 @@ const cadastroController = {
                 DEPARTAMENTO_PRODUTO: DEPARTAMENTO_PRODUTO
             }
         })
-     
+
         if (prod) {
             res.send({
                 "msg": "Produto já existente na base de cadastro!"
@@ -59,30 +59,66 @@ const cadastroController = {
                 })
 
 
-                res.send({'msg':'produto cadastrado com sucesso'})
+                res.send({
+                    'msg': 'produto cadastrado com sucesso'
+                })
             } catch (error) {
                 console.log(error);
             }
         }
-    
+
+
+    },
+    updateCadastro: async (req, res) => {
+
+        const {
+            COD_PRODUTO,
+            QUANTIDADE
+        } = req.body;
+
+        try {
+            const up = await produto.findOne({
+                where: {
+                    COD_PRODUTO: COD_PRODUTO
+                }
+            })
+            up.QUANTIDADE = up.QUANTIDADE + QUANTIDADE;
+            up.save();
+            res.send({
+                'msg': 'produto alterado com sucesso !'
+            })
+
+        } catch (error) {
+            console.log(error);
+            res.send({
+                'erro': 'erro interno no servidor'
+            })
+        }
+
+
 
     },
     createFornecedor: async (req, res) => {
-
+       
         const {
-            nome,
-            cnpj,
-            endereco,
-            estado
+            NOME_FORNECEDOR,
+            CNPJ_FORNECEDOR,
+            ENDERECO_FORNECEDOR,
+            UDF_FORNECEDOR
         } = req.body;
-        const db = new Sequelize(config);
-
-
-
+    
         try {
 
-            const result = db.query(`INSERT INTO FORNECEDOR(NOME_FORNECEDOR, CNPJ_FORNECEDOR, ENDERECO_FORNECEDOR, UDF_FORNECEDOR)VALUES('${nome}',${cnpj} ,'${endereco}','${estado}')`)
-            res.render('cad_fornecedor')
+            const result = await fornecedor.create({
+
+                NOME_FORNECEDOR: NOME_FORNECEDOR,
+                CNPJ_FORNECEDOR: CNPJ_FORNECEDOR,
+                ENDERECO_FORNECEDOR: ENDERECO_FORNECEDOR,
+                UDF_FORNECEDOR: UDF_FORNECEDOR
+            })
+            res.send({
+                'msg': "fornecedor cadastrado com sucesso"
+            });
 
         } catch (error) {
 
@@ -121,8 +157,8 @@ const cadastroController = {
         if (req.body.TAMANHO_PRODUTO) where.TAMANHO_PRODUTO = req.body.TAMANHO_PRODUTO;
         if (req.body.GENERO_PRODUTO) where.GENERO_PRODUTO = req.body.GENERO_PRODUTO;
         if (req.body.COD_FORNECEDOR) where.COD_FORNECEDOR = req.body.COD_FORNECEDOR;
-        if(req.body.COD_PRODUTO) where.COD_PRODUTO = req.body.COD_PRODUTO;
-        
+        if (req.body.COD_PRODUTO) where.COD_PRODUTO = req.body.COD_PRODUTO;
+
         const pesquisa = await produto.findAll({
 
             where,
@@ -130,8 +166,15 @@ const cadastroController = {
 
         res.json(pesquisa)
     },
-    saida: async (req, res) => {
-        console.log(req.body)
+    pesquisaSaida: async (req, res) => {
+       
+        let where = {};
+        if(req.body.movimento) where.DATA_MOVIMENTO = req.body.movimento;
+        if(req.body.cod_produto) where.COD_PRODUTO = req.body.cod_produto;
+
+        const result = await movimento.findAll({where})
+
+        res.send(result);
     },
 
     pesquisaFornecedor: async (req, res) => {
@@ -140,7 +183,7 @@ const cadastroController = {
         if (req.body.CNPJ_FORNECEDOR) where.CNPJ_FORNECEDOR = req.body.CNPJ_FORNECEDOR;
         if (req.body.ENDERECO_FORNECEDOR) where.ENDERECO_FORNECEDOR = req.body.ENDERECO_FORNECEDOR;
         if (req.body.UDF_FORNECEDOR) where.UDF_FORNECEDOR = req.body.UDF_FORNECEDOR
-        console.log(where)
+    
         const pesquisa = await fornecedor.findAll({
 
             where,
@@ -170,7 +213,7 @@ const cadastroController = {
             SENHA,
             ATRIBUICAO
         } = req.body;
-       
+
         try {
             const user = await usuario.findOne({
                 where: {
@@ -203,7 +246,11 @@ const cadastroController = {
     },
 
     saida: async (req, res) => {
-        const { COD_PRODUTO, QUANTIDADE_PRODUTO,CARTAO_USUARIO} = req.body;
+        const {
+            COD_PRODUTO,
+            QUANTIDADE_PRODUTO,
+            CARTAO_USUARIO
+        } = req.body;
         const baixa = await produto.findOne({
             where: {
                 COD_PRODUTO: COD_PRODUTO
@@ -216,16 +263,18 @@ const cadastroController = {
         const hora = moment().format('LLL');
 
         try {
-        const movi = await movimento.create({
-            DATA_MOVIMENTO: hora,
-            COD_PRODUTO: COD_PRODUTO,
-            CARTAO_USUARIO: CARTAO_USUARIO,
-            QUANTIDADE_PRODUTO: QUANTIDADE_PRODUTO,
-        })
-        res.status(201).send({'ok':true})
-    } catch (error) {
+            const movi = await movimento.create({
+                DATA_MOVIMENTO: hora,
+                COD_PRODUTO: COD_PRODUTO,
+                CARTAO_USUARIO: CARTAO_USUARIO,
+                QUANTIDADE_PRODUTO: QUANTIDADE_PRODUTO,
+            })
+            res.status(201).send({
+                'ok': true
+            })
+        } catch (error) {
             console.log(error)
-    }
+        }
     }
 }
 module.exports = cadastroController

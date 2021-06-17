@@ -32,20 +32,20 @@
                         <form id='modal-formulario' action="#" method="POST">
                             <div class="modal-label">
                                 <label>NOME</label>
-                                <input id="NOME" type="text" name="NOME">
+                                <input id="NOME-PESQUISA" type="text" name="NOME">
                             </div>
 
                             <div class="modal-label">
                                 <label>CNPJ</label>
-                                <input id="CNPJ" type="text" name="CNPJ">
+                                <input id="CNPJ-PESQUISA" type="text" name="CNPJ">
                             </div>
                             <div class="modal-label">
                                 <label>ENDERECO</label>
-                                <input id="ENDERECO" type="text" name="ENDERECO">
+                                <input id="ENDERECO-PESQUISA" type="text" name="ENDERECO">
                             </div>
                             <div class="modal-label">
                                 <label>ESTADO</label>
-                                <input id="ESTADO" type="text" name="ESTADO">
+                                <input id="ESTADO-PESQUISA" type="text" name="ESTADO">
                             </div>
                             
 
@@ -53,7 +53,7 @@
                 </div>
                 <div class="modal-footer">
                     {{!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
-                    <button id="pesquisar" type="button" class="btn btn-success">Pesquisar</button>
+                    <button id="pesquisar-Modal" type="button" class="btn btn-success">Pesquisar</button>
                     </form>
                 </div>
             </div>
@@ -65,7 +65,7 @@
         <div class="formulario">
             <h1 class="title">FORNECEDOR</h1>
             <div class="row">
-                <form id="formulario-cadastro" action="#" method="POST">
+                <form id="formulario-fornecedor" action="#" method="POST">
                 <div class="col">
                     <label>TIPO NOME</label>
                     <input id="NOME" type="text" class="form-control" name="NOME">
@@ -115,7 +115,7 @@
         </div>
     </div>
     <script>
-        document.getElementById('formulario').addEventListener('submit',(evt)=>{
+        document.getElementById('formulario-fornecedor').addEventListener('submit',(evt)=>{
            evt.preventDefault();
             const nome = document.getElementById('NOME').value;
             const cnpj = document.getElementById('CNPJ').value;
@@ -138,18 +138,24 @@
         body: raw,
         redirect: 'follow'
         };
-        console.log(raw)
-        fetch("http://localhost:3000/fornecedor/pesquisa", requestOptions)
+        
+        fetch("http://localhost:3000/cadastrar/fornecedor", requestOptions)
         .then(response => response.json())
         .then(result => {
-            console.log(result)
+             let x = confirm(result.msg)
+                    if (x == true) {
+                        window.location.reload();
+                    } 
         })
-        document.getElementById('pesquisar').addEventListener('click', (evt) => {
-          
-        const nome = document.getElementById('NOME').value;
-        const cnpj = document.getElementById('CNPJ').value;
-        const endereco = document.getElementById('ENDERECO').value;
-        const estado = document.getElementById('ESTADO').value;
+})
+
+
+        document.getElementById('pesquisar-Modal').addEventListener('click', () => {
+            
+            const nome = document.getElementById('NOME-PESQUISA').value;
+            const cnpj = document.getElementById('CNPJ-PESQUISA').value;
+            const endereco = document.getElementById('ENDERECO-PESQUISA').value;
+            const estado = document.getElementById('ESTADO-PESQUISA').value;
         const tabela = document.getElementById('table')
 
         var myHeaders = new Headers();

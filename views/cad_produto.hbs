@@ -87,35 +87,39 @@
                         <form id='modal-formulario' action="#" method="POST">
                             <div class="modal-label">
                                 <label>CATEGORIA</label>
-                                <input id="CATEGORIA" type="text" name="CATEGORIA">
+                                <input id="CATEGORIA-ALTERA" type="text" name="CATEGORIA" disabled>
                             </div>
 
                             <div class="modal-label">
                                 <label>TIPO</label>
-                                <input id="TIPO" type="text" name="TECIDO">
+                                <input id="TIPO-ALTERA" type="text" name="TIPOTECIDO" disabled>
                             </div>
                             <div class="modal-label">
                                 <label>TAMANHO</label>
-                                <input id="TAMANHO" type="text" name="TAMANHO">
+                                <input id="TAMANHO-ALTERA" type="text" name="TAMANHO" disabled>
                             </div>
                             <div class="modal-label">
                                 <label>GENERO</label>
-                                <input id="GENERO" type="text" name="GENERO">
+                                <input id="GENERO-ALTERA" type="text" name="GENERO" disabled>
                             </div>
                             <div class="modal-label">
                                 <label>COD_PRODUTO</label>
-                                <input id="COD_PRODUTO" type="text" name="CATEGORIA">
+                                <input id="COD_PRODUTO-ALTERA" type="text" name="CATEGORIA" disabled>
                             </div>
                             <div class="modal-label">
-                                <label>COD_FORNECEDOR</label>
-                                <input id="COD_FORNECEDOR" type="text" name="COD_FORNECEDOR">
+                                <label>COD_FORNECEDOR</label disabled>
+                                <input id="COD_FORNECEDOR-ALTERA" type="text" name="COD_FORNECEDOR">
+                            </div>
+                            <div class="modal-label">
+                                <label>QUANTIDADE</label>
+                                <input id="QUANTIDADE-ALTERA" type="text" name="QUANTIDADE">
                             </div>
 
                     </div>
                 </div>
                 <div class="modal-footer">
                     {{!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
-                    <button id="confirmar" type="button" class="btn btn-success">Confirmar</button>
+                    <button id="confirmar-altera" type="button" class="btn btn-success">Confirmar</button>
                     </form>
                 </div>
             </div>
@@ -188,11 +192,11 @@
         <div class="pesquisa">
             <table id="table" style="width:100%">
                 <thead>
+                    <th>COD_PRODUTO</th>
                     <th>TIPO DE PRODUTO</th>
                     <th>TIPO</th>
                     <th>TAMANHO</th>
                     <th>GENERO</th>
-                    <th>FORNECEDOR</th>
                     <th>QUANTIDADE</th>
                 </thead>
 
@@ -201,6 +205,14 @@
         </div>
     </div>
     <script>
+        const modalAlterar = (categoria,tipo,tamanho,cod_produto,genero,quantidade) =>{
+                document.getElementById('CATEGORIA-ALTERA').value = categoria;
+                document.getElementById('TIPO-ALTERA').value = tipo;
+                document.getElementById('TAMANHO-ALTERA').value = tamanho;
+                document.getElementById('GENERO-ALTERA').value = genero;
+                document.getElementById('QUANTIDADE-ALTERA').value = quantidade;
+                document.getElementById('COD_PRODUTO-ALTERA').value = cod_produto;
+        }
         document.getElementById('pesquisa').addEventListener('click',()=>{
             var tab = document.querySelector('table')
             tab.removeChild(tab.childNodes[2])
@@ -279,25 +291,59 @@
                 .then(response => response.json())
                 .then(result => {
                     
-                    result.forEach((data) => {
+                    if(result.length == 0){
+         
+                         let x = confirm("não foram encontrados resultados")
+                        if (x == true) {
+                            window.location.reload();
+                        } 
+                    }
+                    result.forEach(data => {
                         
                     tabela.innerHTML += `<tr id= "dadost">
+                    <td>${data.COD_PRODUTO}</td>
                     <td>${data.CATEGORIA_PRODUTO}</td>
                     <td>${data.TIPO_PRODUTO}</td>
                     <td>${data.TAMANHO_PRODUTO}</td>
                     <td>${data.GENERO_PRODUTO}</td>
-                    <td>${data.COD_FORNECEDOR}</td>
                     <td>${data.QUANTIDADE_PRODUTO}</td>
-                    <td><button  id="pesquisar" type="button" class="btn btn-success" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal2">
-                        Alterar
-                    </button></td>
-                    
                 </tr>`
-                    })
+                })
                 })
                 .catch(error => console.log('error', error));
         })
+
+        document.getElementById('confirmar-altera').addEventListener('click',()=>{
+
+            const quantidade = document.getElementById('QUANTIDADE-ALTERA').value;
+            const cod_produto = document.getElementById('COD_PRODUTO-ALTERA').value;
+
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+               
+                COD_PRODUTO: cod_produto,
+                QUANTIDADE: quantidade
+                
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:3000/produto/alterar", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                })
+
+        })
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
