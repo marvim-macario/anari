@@ -199,17 +199,14 @@
                 redirect: 'follow'
             };
 
-            fetch("http://localhost:3000/produtos/saida", requestOptions)
+            fetch("http://localhost:3000/produto/saida", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
-                    if(result.ok) {
-
-                         let x = confirm("saida registrada");
+                
+                         let x = confirm(result.msg);
                         if (x == true) {
                             window.location.reload();
                         } 
-                    }
                 })
                 .catch(error => console.log('error', error));
         })

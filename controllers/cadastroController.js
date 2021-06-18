@@ -250,10 +250,11 @@ const cadastroController = {
 
     saida: async (req, res) => {
         const {
-            COD_PRODUTO,
-            QUANTIDADE_PRODUTO,
-            CARTAO_USUARIO
+                COD_PRODUTO,
+                QUANTIDADE_PRODUTO,
+                CARTAO_USUARIO
         } = req.body;
+
         const baixa = await produto.findOne({
             where: {
                 COD_PRODUTO: COD_PRODUTO
@@ -261,7 +262,15 @@ const cadastroController = {
         })
 
         baixa.QUANTIDADE_PRODUTO = baixa.QUANTIDADE_PRODUTO - QUANTIDADE_PRODUTO;
-        baixa.save();
+        
+        if(baixa.QUANTIDADE_PRODUTO < 0){
+            res.send({'msg':'estoque não contém quantidade a ser retirada!'})
+
+        } else {
+
+            baixa.save();
+        }
+        
 
         const hora = moment().format('LLL');
 
@@ -273,9 +282,10 @@ const cadastroController = {
                 QUANTIDADE_PRODUTO: QUANTIDADE_PRODUTO,
             })
             res.status(201).send({
-                'ok': true
+                "msg":"saida registrada com sucesso"
             })
         } catch (error) {
+            res.send({"error":"erro interno servidor"});
             console.log(error)
         }
     }
