@@ -14,11 +14,11 @@
 </head>
 
 <body>
-     <div class="menu-button">
+    <div class="menu-button">
         <button type="button"><a href="http://localhost:3000/home">Home</a></button>
     </div>
     <!--Modal Alterar -->
-       <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -97,7 +97,7 @@
                                 <label>ATRIBUICAO</label>
                                 <input id="ATRIBUICAO" type="text" name="ATRIBUICAO">
                             </div>
-                            
+
 
                     </div>
                 </div>
@@ -115,68 +115,104 @@
         <div class="formulario">
             <h1 class="title">CADASTRAR USUARIO</h1>
             <div class="row">
-                <form action="/cadastro/produto" method="POST">
-                <div class="col">
+                <form id="form-cadastro" action="#" method="POST">
+                    <div class="col">
 
-                    <label>NOME</label>
-                    <input id="" type="text" class="form-control" name="NOME">
-                </div>
-                <div class="col">
-                    <label>NUMERO CARTAO</label>
-                    <input id="" type="text" class="form-control" name="NUMERO CARTAO">
-                </div>
+                        <label>NOME</label>
+                        <input id="nome-cadastro" type="text" class="form-control" name="NOME">
+                    </div>
+                    <div class="col">
+                        <label>NUMERO CARTAO</label>
+                        <input id="numero-cartao" type="text" class="form-control" name="NUMERO CARTAO">
+                    </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label>CARGO</label>
-                    <input id="" type="text" class="form-control" name="CARGO">
+                    <input id="cargo-cadastro" type="text" class="form-control" name="CARGO">
                 </div>
                 <div class="col">
                     <label>SENHA</label>
-                    <input id="" type="text" class="form-control" name="SENHA">
+                    <input id="senha-cadastro" type="text" class="form-control" name="SENHA">
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label>ATRIBUICAO</label>
-                    <input id="" type="text" class="form-control" name="ATRIBUICAO">
-                </div>
-                
-            </div>
-            
-                <div class="col-6">
-                    <button id="cadastrar" type="submit" class="btn btn-success">
-                        Cadastrar
-                    </button>
-                </div>
-                </form>
-                <div class="col-6">
-                    <button id="pesquisar" type="button" class="btn btn-success" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        Pesquisa
-                    </button>
+                    <input id="atribuicao-cadastro" type="text" class="form-control" name="ATRIBUICAO">
                 </div>
 
             </div>
-        </div>
-        <div class="pesquisa">
-            <table id="table" style="width:100%">
-                <tr>
-                    <th>NOME</th>
-                    <th>NUMERO CARTAO</th>
-                    <th>CARGO</th>
-                    <th>SENHA</th>
-                    <th>ATRIBUICAO</th>
-                </tr>
-               
-               
-            </table>
+
+            <div class="col-6">
+                <button id="cadastrar" type="submit" class="btn btn-success">
+                    Cadastrar
+                </button>
+            </div>
+            </form>
+            <div class="col-6">
+                <button id="pesquisar" type="button" class="btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Pesquisa
+                </button>
+            </div>
+
         </div>
     </div>
+    <div class="pesquisa">
+        <table id="table" style="width:100%">
+            <tr>
+                <th>NOME</th>
+                <th>NUMERO CARTAO</th>
+                <th>CARGO</th>
+                <th>SENHA</th>
+                <th>ATRIBUICAO</th>
+            </tr>
+
+
+        </table>
+    </div>
+    </div>
     <script>
-        
+        document.getElementById('form-cadastro').addEventListener('submit', (evt) => {
+            evt.preventDefault();
+
+            const nome = document.getElementById('nome-cadastro').value;
+            const numero_cartao = document.getElementById('numero-cartao').value;
+            const cargo = document.getElementById('cargo-cadastro').value;
+            const senha = document.getElementById('senha-cadastro').value;
+            const atribuicao = document.getElementById('atribuicao-cadastro').value;
+
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                nome: nome,
+                numero: numero_cartao,
+                cargo: cargo,
+                senha: senha,
+                nivel: atribuicao
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:3000/cadastrar/usuario", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    let x = confirm(result.msg)
+                 
+                });
+        })
+
         document.getElementById('pesquisar').addEventListener('click', (evt) => {
-          
+
             const nome = document.getElementById('NOME').value;
             const cartao = document.getElementById('CARTAO-USUARIO').value;
             const cargo = document.getElementById('CARGO').value;
@@ -184,38 +220,38 @@
             const atribuicao = document.getElementById('ATRIBUICAO').value;
             const tabela = document.getElementById('table')
 
-            const modalAlterar = (nome,cartao,cargo,senha,nivel) =>{
+            const modalAlterar = (nome, cartao, cargo, senha, nivel) => {
                 document.getElementById('NOME-ALTERA').value = nome;
                 document.getElementById('CARTAO-USUARIO-ALTERA').value = cartao;
                 document.getElementById('CARGO-ALTERA').value = cargo;
                 document.getElementById('SENHA-ALTERA').value = senha;
                 document.getElementById('ATRIBUICAO-ALTERA').value = nivel;
-        }
+            }
 
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({
-            NOME:nome,
-            NUMERO_CARTAO:cartao,
-            CARGO :cargo,
-            SENHA:senha,
-            ATRIBUICAO:atribuicao,
-        });
+            var raw = JSON.stringify({
+                NOME: nome,
+                NUMERO_CARTAO: cartao,
+                CARGO: cargo,
+                SENHA: senha,
+                ATRIBUICAO: atribuicao,
+            });
 
-        var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-        };
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
 
-        fetch("http://localhost:3000/usuario/pesquisa", requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            result.forEach((data) => {
-                console.log(data);
-                table.innerHTML+= `<tr>
+            fetch("http://localhost:3000/usuario/pesquisa", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    result.forEach((data) => {
+                        console.log(data);
+                        table.innerHTML += `<tr>
                     <td>${data.NOME_USUARIO}</td>
                     <td>${data.CARTAO_USUARIO}</td>
                     <td>${data.CARGO_USUARIO}</td>
@@ -227,51 +263,54 @@
                     </button></td>
 
                 </tr>`
-            })
+                    })
+                })
+                .catch(error => console.log('error', error));
         })
-        .catch(error => console.log('error', error));
-})
 
 
 
-document.getElementById('confirmar').addEventListener('click',()=>{
 
 
-               let nome = document.getElementById('NOME-ALTERA').value;
-               let cartao = document.getElementById('CARTAO-USUARIO-ALTERA').value ;
-               let cargo = document.getElementById('CARGO-ALTERA').value; 
-               let senha = document.getElementById('SENHA-ALTERA').value; 
-               let atribuicao = document.getElementById('ATRIBUICAO-ALTERA').value; 
 
-                var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({
-            NOME:nome,
-            NUMERO_CARTAO:cartao,
-            CARGO :cargo,
-            SENHA:senha,
-            ATRIBUICAO:atribuicao,
-        });
+        document.getElementById('confirmar').addEventListener('click', () => {
 
-        var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-        };
 
-        fetch("http://localhost:3000/usuario/alterar", requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            alert(result.msg);
+            let nome = document.getElementById('NOME-ALTERA').value;
+            let cartao = document.getElementById('CARTAO-USUARIO-ALTERA').value;
+            let cargo = document.getElementById('CARGO-ALTERA').value;
+            let senha = document.getElementById('SENHA-ALTERA').value;
+            let atribuicao = document.getElementById('ATRIBUICAO-ALTERA').value;
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                NOME: nome,
+                NUMERO_CARTAO: cartao,
+                CARGO: cargo,
+                SENHA: senha,
+                ATRIBUICAO: atribuicao,
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:3000/usuario/alterar", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    alert(result.msg);
+                })
+
+                .catch(error => console.log('error', error));
+
+
         })
-    
-        .catch(error => console.log('error', error));
-
-
-})
-
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">

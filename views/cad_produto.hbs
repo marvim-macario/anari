@@ -250,7 +250,7 @@
             fetch("http://localhost:3000/cadastro/produto", requestOptions)
                 .then(response => response.json())
                 .then(result =>{
-                     let x = confirm(result.msg)
+                    let x = confirm(result.msg)
                     if (x == true) {
                         window.location.reload();
                     } 

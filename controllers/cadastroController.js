@@ -36,7 +36,7 @@ const cadastroController = {
                 CATEGORIA_PRODUTO: CATEGORIA_PRODUTO,
                 TIPO_PRODUTO: TIPO_PRODUTO,
                 TAMANHO_PRODUTO: TAMANHO_PRODUTO,
-                GENERO_PRODUTO: "M",
+                GENERO_PRODUTO: GENERO,
                 COD_FORNECEDOR: COD_FORNECEDOR,
                 DEPARTAMENTO_PRODUTO: DEPARTAMENTO_PRODUTO
             }
@@ -127,6 +127,7 @@ const cadastroController = {
 
     },
     createUsuario: async (req, res) => {
+        console.log(req.body);
         const db = new Sequelize(config);
         const {
             nome,
@@ -144,8 +145,10 @@ const cadastroController = {
         VALUES
             ('${nome}','${numero}','${cargo}', '${senha}','${nivel}')`)
 
-            res.render('cad_usuario')
+            res.send({"msg":"usuario cadastrado com sucesso "});
+
         } catch (error) {
+            res.send({"msg":"erro interno servidor"})
             console.log(error)
         }
     },
