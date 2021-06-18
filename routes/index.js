@@ -64,7 +64,7 @@ router.post('/', (req,res) => {
 router.post('/cadastro/produto',cadastroController.create)
 router.post('/saida/pesquisa',cadastroController.pesquisaSaida)
 router.post('/cadastro/produto/pesquisa',cadastroController.pesquisaPropoduto)
-router.post('produto/alterar',cadastroController.updateCadastro)
+router.post('/produto/alterar',cadastroController.updateCadastro)
 router.post('/produto/saida',cadastroController.saida);
 router.post('/cadastrar/fornecedor',cadastroController.createFornecedor);
 router.post('/fornecedor/pesquisa',cadastroController.pesquisaFornecedor)

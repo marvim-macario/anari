@@ -107,8 +107,8 @@
                                 <input id="COD_PRODUTO-ALTERA" type="text" name="CATEGORIA" disabled>
                             </div>
                             <div class="modal-label">
-                                <label>COD_FORNECEDOR</label disabled>
-                                <input id="COD_FORNECEDOR-ALTERA" type="text" name="COD_FORNECEDOR">
+                                <label>COD_FORNECEDOR</label >
+                                <input id="COD_FORNECEDOR-ALTERA" type="text" name="COD_FORNECEDOR" disabled>
                             </div>
                             <div class="modal-label">
                                 <label>QUANTIDADE</label>
@@ -172,7 +172,7 @@
             <div class="row">
                 <div class="col-6">
                     <label>QUANTIDADE</label>
-                    <input id="quantidade-cadastro" type="text" class="form-control" name="QUANTIDADE">
+                    <input id="quantidade-cadastro" type="text" class="form-control" name="QUANTIDADE"required >
                 </div>
                 <div class="col-6">
                     <button id="cadastrar" type="submit" class="btn btn-success">
@@ -205,14 +205,16 @@
         </div>
     </div>
     <script>
-        const modalAlterar = (categoria,tipo,tamanho,cod_produto,genero,quantidade) =>{
+        const modalAlterar = (cod_fornecedor,categoria,tipo,tamanho,cod_produto,genero,quantidade) => {
                 document.getElementById('CATEGORIA-ALTERA').value = categoria;
                 document.getElementById('TIPO-ALTERA').value = tipo;
                 document.getElementById('TAMANHO-ALTERA').value = tamanho;
                 document.getElementById('GENERO-ALTERA').value = genero;
                 document.getElementById('QUANTIDADE-ALTERA').value = quantidade;
                 document.getElementById('COD_PRODUTO-ALTERA').value = cod_produto;
+                document.getElementById('COD_FORNECEDOR-ALTERA').value = cod_fornecedor;
         }
+
         document.getElementById('pesquisa').addEventListener('click',()=>{
             var tab = document.querySelector('table')
             tab.removeChild(tab.childNodes[2])
@@ -234,7 +236,7 @@
                 CATEGORIA_PRODUTO: categoria,
                 TIPO_PRODUTO: tipo_produto,
                 TAMANHO_PRODUTO: tamanho,
-                GENERO_PRODUTO: genero,
+                GENERO: genero,
                 QUANTIDADE: quantidade,
                 DEPARTAMENTO_PRODUTO: departamento,
                 COD_FORNECEDOR: cod_fornecedor
@@ -246,7 +248,7 @@
                 body: raw,
                 redirect: 'follow'
             };
-
+           
             fetch("http://localhost:3000/cadastro/produto", requestOptions)
                 .then(response => response.json())
                 .then(result =>{
@@ -307,6 +309,10 @@
                     <td>${data.TAMANHO_PRODUTO}</td>
                     <td>${data.GENERO_PRODUTO}</td>
                     <td>${data.QUANTIDADE_PRODUTO}</td>
+                    <td><button onclick = ${modalAlterar(data.COD_FORNECEDOR,data.CATEGORIA_PRODUTO,data.TIPO_PRODUTO,data.TAMANHO_PRODUTO,data.COD_PRODUTO,data.GENERO_PRODUTO,data.QUANTIDADE_PRODUTO)} id="pesquisar" type="button" class="btn btn-success" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal2">
+                        Alterar
+                    </button></td>
                 </tr>`
                 })
                 })
@@ -339,7 +345,10 @@
             fetch("http://localhost:3000/produto/alterar", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
+                     let x = confirm(result.msg)
+                        if (x == true) {
+                            window.location.reload();
+                        } 
                 })
 
         })

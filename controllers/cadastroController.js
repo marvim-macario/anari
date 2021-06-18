@@ -18,6 +18,7 @@ const {
 
 const cadastroController = {
     create: async (req, res) => {
+        console.log(req.body)
         const {
             CATEGORIA_PRODUTO,
             TIPO_PRODUTO,
@@ -70,7 +71,7 @@ const cadastroController = {
 
     },
     updateCadastro: async (req, res) => {
-
+     
         const {
             COD_PRODUTO,
             QUANTIDADE
@@ -99,7 +100,6 @@ const cadastroController = {
 
     },
     createFornecedor: async (req, res) => {
-       
         const {
             NOME_FORNECEDOR,
             CNPJ_FORNECEDOR,
